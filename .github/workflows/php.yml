@@ -1,0 +1,23 @@
+name: PHP Composer
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+
+jobs:
+  deploy:
+     runs-on: ubuntu-latest
+     steps:
+      - uses: appleboy/ssh-action@master
+        name: executing remote ssh commands using password
+        with:
+         host: ${{secrets.SSH_HOST}}
+         password: ${{secrets.SSH_PASSWORD}}
+         username: ${{secrets.SSH_USERNAME}}
+
+         script: |
+          cd /usr/share/nginx/html/email/email
+              git pull origin main
